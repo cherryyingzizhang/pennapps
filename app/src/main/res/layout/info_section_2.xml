@@ -2,14 +2,44 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:background="#FF9800"
+              android:padding="16dp">
 
-    <com.romainpiel.shimmer.ShimmerTextView
-        android:id="@+id/shimmer_tv"
-        android:text="Example Text 2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#444"
-        android:textSize="50sp"/>
+    <TextView
+        android:id="@+id/info_section_1_text"
+        android:text="ALMOST THERE"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:gravity="left"
+        android:textStyle="bold"
+        android:textColor="#FFF"
+        android:textSize="75sp"
+        android:layout_marginTop="50dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:id="@+id/welcome_sub_text"
+        android:textColor="#FFF"
+        android:textSize="20sp"
+        android:gravity="left"
+        android:text="We need some more parameters."/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/welcome_sub_text"
+        android:textColor="#FFF"
+        android:textSize="15sp"
+        android:gravity="center_horizontal"
+        android:text="Please complete a short calibration process to ensure we're getting the right data."/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/login_fit"
+        android:text="Calibrate"
+        android:background="#FFFFFF"/>
 
 </LinearLayout>
