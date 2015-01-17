@@ -1,0 +1,173 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:layout_below="@+id/startScan"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/connect" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start Scan"
+        android:id="@+id/startScan"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:onClick="onStartScan" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stop Scan"
+        android:id="@+id/stopScan"
+        android:layout_alignTop="@+id/startScan"
+        android:layout_toEndOf="@+id/startScan"
+        android:layout_marginStart="39dp"
+        android:onClick="onStopScan" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Connect"
+        android:id="@+id/connect"
+        android:onClick="onConnect"
+        android:layout_below="@+id/stopScan"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tick"
+        android:id="@+id/tickLabel"
+        android:layout_below="@+id/spinner"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MTB1"
+        android:id="@+id/mtb1Label"
+        android:layout_below="@+id/tickLabel"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MTB5"
+        android:id="@+id/mtb5Label"
+        android:layout_below="@+id/mtb1Label"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Heel"
+        android:id="@+id/heelLabel"
+        android:layout_below="@+id/mtb5Label"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AccX"
+        android:id="@+id/accX"
+        android:layout_below="@+id/heelLabel"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AccY"
+        android:id="@+id/accY"
+        android:layout_below="@+id/accX"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AccZ"
+        android:id="@+id/accZ"
+        android:layout_below="@+id/accY"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="0"
+        android:id="@+id/tickValue"
+        android:layout_below="@+id/spinner"
+        android:layout_alignEnd="@+id/startScan" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="0"
+        android:id="@+id/mtb1Value"
+        android:layout_below="@+id/tickLabel"
+        android:layout_alignEnd="@+id/startScan" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="0"
+        android:id="@+id/mtb5Value"
+        android:layout_below="@+id/mtb1Label"
+        android:layout_alignEnd="@+id/startScan" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="0"
+        android:id="@+id/heelValue"
+        android:layout_below="@+id/mtb5Label"
+        android:layout_alignEnd="@+id/startScan" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="0"
+        android:id="@+id/accXValue"
+        android:layout_below="@+id/heelValue"
+        android:layout_alignEnd="@+id/startScan" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="0"
+        android:id="@+id/accYValue"
+        android:layout_below="@+id/accXValue"
+        android:layout_alignEnd="@+id/startScan" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="0"
+        android:id="@+id/accZValue"
+        android:layout_below="@+id/accYValue"
+        android:layout_alignEnd="@+id/startScan" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Test Service"
+        android:id="@+id/testServiceButton"
+        android:layout_above="@+id/stopScan"
+        android:layout_alignParentEnd="true"
+        android:onClick="onTestService" />
+</RelativeLayout>
