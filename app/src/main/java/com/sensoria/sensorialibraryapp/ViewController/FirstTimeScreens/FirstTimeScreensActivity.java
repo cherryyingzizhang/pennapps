@@ -110,7 +110,7 @@ public class FirstTimeScreensActivity extends FragmentActivity implements Action
 
 
         //do google fit api stuff
-
+        buildFitnessClient();
     }
 
     /**

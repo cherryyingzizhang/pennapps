@@ -25,6 +25,8 @@ import com.sensoria.sensorialibrary.SAFoundAnklet;
 import com.sensoria.sensorialibraryapp.R;
 import com.sensoria.sensorialibraryapp.ViewController.MainMenu.MenuActivity;
 
+import java.util.ArrayList;
+
 public class CalibrationsActivity extends ActionBarActivity implements SAAnkletInterface
 {
     //The user should calibrate and pose with his/her feet in 4 different positions. This keeps
@@ -36,6 +38,24 @@ public class CalibrationsActivity extends ActionBarActivity implements SAAnkletI
     protected boolean firstTime = false;
     protected SAAnklet anklet;
     boolean recordPoints = false;
+
+    ArrayList<Integer> cal0_mtb1 = new ArrayList<Integer>();
+    ArrayList<Integer> cal1_mtb1 = new ArrayList<Integer>();
+    ArrayList<Integer> cal2_mtb1 = new ArrayList<Integer>();
+    ArrayList<Integer> cal3_mtb1 = new ArrayList<Integer>();
+
+    ArrayList<Integer> cal0_mtb5 = new ArrayList<Integer>();
+    ArrayList<Integer> cal1_mtb5 = new ArrayList<Integer>();
+    ArrayList<Integer> cal2_mtb5 = new ArrayList<Integer>();
+    ArrayList<Integer> cal3_mtb5 = new ArrayList<Integer>();
+
+    ArrayList<Integer> cal0_heel = new ArrayList<Integer>();
+    ArrayList<Integer> cal1_heel = new ArrayList<Integer>();
+    ArrayList<Integer> cal2_heel = new ArrayList<Integer>();
+    ArrayList<Integer> cal3_heel = new ArrayList<Integer>();
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -67,13 +87,36 @@ public class CalibrationsActivity extends ActionBarActivity implements SAAnkletI
     protected void onPause() {
         super.onPause();
 
+        //CALIBRATION STORAGE TO CLOUD
+        //take range of heel, mtb1, mtb5
+        //if range > 100... redo the whole calibration steps (the 4 steps)
+        //take mean of heel, mtb1, mtb5, and half the range to person's google fit
+        //use those numbers later
+        storeRangeAndMeanOf("heel", 0);
+        storeRangeAndMeanOf("mtb1", 0);
+        storeRangeAndMeanOf("mtb5", 0);
+        storeRangeAndMeanOf("heel", 1);
+        storeRangeAndMeanOf("mtb1", 1);
+        storeRangeAndMeanOf("mtb5", 1);
+        storeRangeAndMeanOf("heel", 2);
+        storeRangeAndMeanOf("mtb1", 2);
+        storeRangeAndMeanOf("mtb5", 2);
+        storeRangeAndMeanOf("heel", 3);
+        storeRangeAndMeanOf("mtb1", 3);
+        storeRangeAndMeanOf("mtb5", 3);
+
+        finish();
         anklet.pause();
+    }
+
+    public void storeRangeAndMeanOf(String valueToStore, int calibrationPoseNumber)
+    {
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-
         anklet.disconnect();
     }
 
@@ -177,6 +220,11 @@ public class CalibrationsActivity extends ActionBarActivity implements SAAnkletI
                         dataPoint.put("heel", anklet.heel);
                         dataPoint.put("accz", anklet.accZ);
                         dataPoint.saveInBackground();
+
+                        cal0_heel.add(anklet.heel);
+                        cal0_mtb1.add(anklet.mtb1);
+                        cal0_mtb5.add(anklet.mtb5);
+
                         numberOfPointsRecorded++;
                     }
                     break;
@@ -189,6 +237,11 @@ public class CalibrationsActivity extends ActionBarActivity implements SAAnkletI
                         dataPoint.put("heel", anklet.heel);
                         dataPoint.put("accz", anklet.accZ);
                         dataPoint.saveInBackground();
+
+                        cal1_heel.add(anklet.heel);
+                        cal1_mtb1.add(anklet.mtb1);
+                        cal1_mtb5.add(anklet.mtb5);
+
                         numberOfPointsRecorded++;
                     }
                     break;
@@ -201,6 +254,11 @@ public class CalibrationsActivity extends ActionBarActivity implements SAAnkletI
                         dataPoint.put("heel", anklet.heel);
                         dataPoint.put("accz", anklet.accZ);
                         dataPoint.saveInBackground();
+
+                        cal2_heel.add(anklet.heel);
+                        cal2_mtb1.add(anklet.mtb1);
+                        cal2_mtb5.add(anklet.mtb5);
+
                         numberOfPointsRecorded++;
                     }
                     break;
@@ -213,6 +271,11 @@ public class CalibrationsActivity extends ActionBarActivity implements SAAnkletI
                         dataPoint.put("heel", anklet.heel);
                         dataPoint.put("accz", anklet.accZ);
                         dataPoint.saveInBackground();
+
+                        cal3_heel.add(anklet.heel);
+                        cal3_mtb1.add(anklet.mtb1);
+                        cal3_mtb5.add(anklet.mtb5);
+
                         numberOfPointsRecorded++;
                     }
                     break;
