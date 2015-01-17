@@ -95,9 +95,9 @@ public class FirstTimeScreensActivity extends FragmentActivity implements Action
         //TODO: make circle page indicator look better
         final float density = getResources().getDisplayMetrics().density;
         pageIndicator.setRadius(6 * density);
-        pageIndicator.setPageColor(0xFFFFCCFF);
-        pageIndicator.setFillColor(0xFFFF6699);
-        pageIndicator.setStrokeColor(0xFF000000);
+        pageIndicator.setPageColor(0xFFDBD2D2);
+        pageIndicator.setFillColor(0xFFFFFFFF);
+        pageIndicator.setStrokeColor(0xFFDBD2D2);
         pageIndicator.setStrokeWidth(1);
 
         // For each of the sections in the app, add a tab to the action bar.

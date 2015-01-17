@@ -20,17 +20,12 @@ import com.sensoria.sensorialibraryapp.R;
 public class SummaryOfAppFragment3 extends Fragment
 {
 
-    ShimmerTextView TV_text1;
     Button next_page_button;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.info_section_3, container, false);
-
-        TV_text1 = (ShimmerTextView) rootView.findViewById(R.id.shimmer_tv);
-        Shimmer shimmer = new Shimmer();
-        shimmer.start(TV_text1);
 
         next_page_button = (Button) rootView.findViewById(R.id.next_page_button);
         next_page_button.setOnClickListener(new View.OnClickListener()
