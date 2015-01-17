@@ -2,7 +2,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.sensoria.sensorialibraryapp.DiagnosticsActivity.Take10StepsFragment">
+             tools:context="com.sensoria.sensorialibraryapp.ViewController.DiagnosticsPage.Take10StepsFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
@@ -12,7 +12,7 @@
         android:text="Take"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="109dp"/>
+        android:layout_marginTop="80dp"/>
 
     <ImageView
         android:src="@drawable/circle"

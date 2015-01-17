@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".FirstTimeScreens.FirstTimeScreensActivity"
+            android:name=".ViewController.FirstTimeScreens.FirstTimeScreensActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Holo.Light" >
             <intent-filter>
@@ -21,7 +21,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainMenu.MenuActivity"
+            android:name=".ViewController.MainMenu.MenuActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ViewController.MonitorPage.MonitorActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,20 +38,24 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MonitorPage.MonitorActivity"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".MonitorPage.TestServiceActivity"
+            android:name=".ViewController.MonitorPage.TestServiceActivity"
             android:label="@string/title_activity_test_service" >
         </activity>
         <activity
-            android:name=".DiagnosticsActivity.DiagnosticsActivity"
+            android:name=".ViewController.DiagnosticsPage.DiagnosticsActivity"
             android:label="@string/title_activity_diagnostics" >
+        </activity>
+        <activity
+            android:name=".ViewController.TrainingPage.TrainingActivity"
+            android:label="@string/title_activity_training" >
+        </activity>
+        <activity
+            android:name=".ViewController.CalibrationsPage.CalibrationsActivity"
+            android:label="@string/title_activity_main" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
     </application>
 

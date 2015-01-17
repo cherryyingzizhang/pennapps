@@ -1,0 +1,45 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                tools:context="com.sensoria.sensorialibraryapp.ViewController.CalibrationsPage.CalibrationsActivity$PlaceholderFragment">
+
+    <ImageView
+        android:id="@+id/imageViewFootPosition"
+        android:src="@drawable/footposition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:text="Please put your foot in this position while standing, and press calibrate. Hold it until the next picture shows up."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageViewFootPosition"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="35dp"/>
+
+    <Button
+        android:id="@+id/button_calibrations"
+        android:text="Start Calibrating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="78dp"/>
+
+    <Spinner
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:layout_below="@+id/startScan"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/connect" />
+
+</RelativeLayout>
