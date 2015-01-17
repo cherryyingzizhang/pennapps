@@ -24,11 +24,6 @@ public class SummaryOfAppFragment2 extends Fragment
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.info_section_2, container, false);
 
-        TV_text1 = (ShimmerTextView) rootView.findViewById(R.id.shimmer_tv);
-
-        Shimmer shimmer = new Shimmer();
-        shimmer.start(TV_text1);
-
         return rootView;
     }
 }
