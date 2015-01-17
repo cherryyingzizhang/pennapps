@@ -2,18 +2,30 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sensoria.sensorialibraryapp" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".LoginAndRegistration.LoginAndRegistrationActivity"
+            android:name=".FirstTimeScreens.FirstTimeScreensActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Holo.Light">
+            android:theme="@android:style/Theme.Holo.Light" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainMenu.MenuActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -27,6 +39,10 @@
         <activity
             android:name=".MonitorPage.TestServiceActivity"
             android:label="@string/title_activity_test_service" >
+        </activity>
+        <activity
+            android:name=".DiagnosticsActivity.DiagnosticsActivity"
+            android:label="@string/title_activity_diagnostics" >
         </activity>
     </application>
 

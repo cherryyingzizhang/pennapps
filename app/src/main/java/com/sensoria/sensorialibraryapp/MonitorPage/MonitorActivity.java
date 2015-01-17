@@ -1,8 +1,10 @@
 package com.sensoria.sensorialibraryapp.MonitorPage;
 
+import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,23 +13,53 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.getpebble.android.kit.PebbleKit;
+import com.getpebble.android.kit.util.PebbleDictionary;
+import com.parse.Parse;
+import com.parse.ParseObject;
 import com.sensoria.sensorialibrary.SAAnklet;
 import com.sensoria.sensorialibrary.SAAnkletInterface;
 import com.sensoria.sensorialibrary.SAFoundAnklet;
+import com.sensoria.sensorialibraryapp.GeneralObjects.FootView;
 import com.sensoria.sensorialibraryapp.R;
 
+import java.util.UUID;
 
+//class from the sample app from sensoria... this and TestServiceActivity are from the sample.
 public class MonitorActivity extends ActionBarActivity implements SAAnkletInterface {
 
     SAAnklet anklet;
 
+    FootView mFootView;
+
+    private static final UUID WATCHAPP_UUID = UUID.fromString("6092637b-8f58-4199-94d8-c606b1e45040");
+    private static final String WATCHAPP_FILENAME = "android-example.pbw";
+
+    private static final int
+            KEY_BUTTON = 0,
+            KEY_VIBRATE = 1,
+            BUTTON_UP = 0,
+            BUTTON_SELECT = 1,
+            BUTTON_DOWN = 2;
+
+    private Handler handler = new Handler();
+
+    private PebbleKit.PebbleDataReceiver appMessageReciever;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_monitor);
+
+        //sending data to our backend and analyzing the metadata.
+        Parse.enableLocalDatastore(this);
+        Parse.initialize(this, "p6UR5hKjTNIa78j8HykqFR2zsvI5nbrwZAJvvWlC", "3dfrd51jLIiGjYTIirGKwl6GtQpfupZg30LaPzBI");
 
         anklet = new SAAnklet(this);
+
+        mFootView =  (FootView) findViewById(R.id.footview);
     }
 
     @Override
@@ -35,6 +67,54 @@ public class MonitorActivity extends ActionBarActivity implements SAAnkletInterf
         super.onResume();
 
         anklet.resume();
+        pebbleOnResume();
+    }
+
+    private void pebbleOnResume()
+    {
+        // Define AppMessage behavior
+        if(appMessageReciever == null) {
+            appMessageReciever = new PebbleKit.PebbleDataReceiver(WATCHAPP_UUID) {
+
+                @Override
+                public void receiveData(Context context, int transactionId, PebbleDictionary data) {
+                    // Always ACK
+                    PebbleKit.sendAckToPebble(context, transactionId);
+
+                    // What message was received?
+                    if(data.getInteger(KEY_BUTTON) != null) {
+                        // KEY_BUTTON was received, determine which button
+                        final int button = data.getInteger(KEY_BUTTON).intValue();
+
+                        // Update UI on correct thread
+                        handler.post(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                switch(button) {
+                                    case BUTTON_UP:
+                                        Toast.makeText(MonitorActivity.this, "up", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case BUTTON_SELECT:
+                                        Toast.makeText(MonitorActivity.this, "select", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case BUTTON_DOWN:
+                                        Toast.makeText(MonitorActivity.this, "down", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    default:
+                                        Toast.makeText(getApplicationContext(), "Unknown button: " + button, Toast.LENGTH_SHORT).show();
+                                        break;
+                                }
+                            }
+
+                        });
+                    }
+                }
+            };
+
+            // Add AppMessage capabilities
+            PebbleKit.registerReceivedDataHandler(this, appMessageReciever);
+        }
     }
 
     @Override
@@ -159,5 +239,34 @@ public class MonitorActivity extends ActionBarActivity implements SAAnkletInterf
         accX.setText(String.format("%f", anklet.accX));
         accY.setText(String.format("%f", anklet.accY));
         accZ.setText(String.format("%f", anklet.accZ));
+
+        mFootView.setMtb1(anklet.mtb1);
+        mFootView.setMtb5(anklet.mtb5);
+        mFootView.setHeel(anklet.heel);
+        mFootView.invalidate();
+
+        if (anklet.tick%100 == 0)
+        {
+            ParseObject gameScore = new ParseObject("DataPoint");
+            gameScore.put("mtb1", anklet.mtb1);
+            gameScore.put("mtb5", anklet.mtb5);
+            gameScore.put("heel", anklet.heel);
+            gameScore.saveInBackground();
+        }
+
+        if ((anklet.mtb1-anklet.mtb5) > 120)
+        {
+            Toast.makeText(MonitorActivity.this, "feet are in... move them outwards", Toast.LENGTH_SHORT).show();
+            PebbleDictionary out = new PebbleDictionary();
+            out.addInt32(KEY_VIBRATE, 0);
+            PebbleKit.sendDataToPebble(getApplicationContext(), WATCHAPP_UUID, out);
+        }
+        else if ((anklet.mtb5-anklet.mtb1) > 120)
+        {
+            Toast.makeText(MonitorActivity.this, "feet are out... move them inwards", Toast.LENGTH_SHORT).show();
+            PebbleDictionary out = new PebbleDictionary();
+            out.addInt32(KEY_VIBRATE, 0);
+            PebbleKit.sendDataToPebble(getApplicationContext(), WATCHAPP_UUID, out);
+        }
     }
 }
