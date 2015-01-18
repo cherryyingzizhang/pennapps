@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="#FF9800"
-              android:padding="16dp">
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FF9800"
+        android:padding="16dp">
 
         <TextView
         android:id="@+id/welcome_text"
@@ -14,44 +14,40 @@
         android:gravity="left"
         android:textStyle="bold"
         android:textColor="#FFF"
-        android:textSize="50sp"
+        android:textSize="45sp"
         android:layout_marginTop="50dp"/>
 
-
         <TextView
-        android:id="@+id/welcome_text"
         android:text="FOOTSIES"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:gravity="left"
         android:textStyle="bold"
         android:textColor="#FFF"
-        android:textSize="80sp"/>
-
+        android:textSize="75sp"/>
 
         <TextView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:id="@+id/welcome_sub_text"
+        android:layout_height="80dp"
         android:textColor="#FFF"
         android:textSize="20sp"
         android:gravity="left"
         android:text="You gait posture companion app."/>
 
-    <TextView
+        <TextView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:id="@+id/welcome_sub_text"
+        android:layout_height="190dp"
         android:textColor="#FFF"
-        android:textSize="15sp"
-        android:text="For your continence, please log into Google Fit so we can store your data in the cloud."
-        android:gravity="center_horizontal"/>
+        android:textSize="18sp"
+        android:gravity="left"
+        android:text="Footsies uses Sensoria Fitness' smart socks to measure pressure levels on the soles of your feet. Using this data and various research on biomechanics and ergonomics, this app is able to correct your gait flaws."/>
 
-    <Button
+        <TextView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:id="@+id/login_fit"
-        android:text="Log In"
-        android:background="#FFFFFF"/>
+        android:layout_height="80dp"
+        android:textColor="#FFF"
+        android:textSize="20sp"
+        android:gravity="left"
+        android:text="Take the first step."/>
 
 </LinearLayout>

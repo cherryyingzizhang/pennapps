@@ -8,29 +8,45 @@
 
     <TextView
         android:id="@+id/info_section_1_text"
-        android:text="FIN"
+        android:text="ALMOST THERE"
         android:layout_width="match_parent"
-        android:layout_height="170dp"
+        android:layout_height="140dp"
         android:gravity="left"
         android:textStyle="bold"
         android:textColor="#FFF"
-        android:textSize="150sp"
+        android:textSize="60sp"
         android:layout_marginTop="50dp"/>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="80dp"
         android:id="@+id/welcome_sub_text"
         android:textColor="#FFF"
         android:textSize="20sp"
         android:gravity="left"
-        android:text="Enjoy!"/>
+        android:text="Just need a few parameters."/>
 
-    <Button
-        android:id="@+id/next_page_button"
-        android:text="Click To Go To Monitor"
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:textColor="#FFF"
+        android:textSize="18sp"
+        android:gravity="left"
+        android:text="Footsies needs to take a few measurements to make sure the data is accurate to your biometrics."/>
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:textColor="#FFF"
+        android:textSize="15sp"
+        android:gravity="center_horizontal"
+        android:text="Please complete a short calibration process to ensure we're getting the right data."/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/next_page_button"
+        android:text="Calibrate"
         android:background="#FFFFFF"/>
 
 </LinearLayout>

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.sensoria.sensorialibraryapp.R;
-import com.sensoria.sensorialibraryapp.ViewController.MainMenu.MenuActivity;
+import com.sensoria.sensorialibraryapp.ViewController.CalibrationsPage.CalibrationsActivity;
 
 
 /**
@@ -31,7 +31,7 @@ public class SummaryOfAppFragment3 extends Fragment
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent(SummaryOfAppFragment3.this.getActivity(), MenuActivity.class);
+                Intent intent = new Intent(SummaryOfAppFragment3.this.getActivity(), CalibrationsActivity.class);
                 startActivity(intent);
             }
         });

@@ -1,6 +1,5 @@
 package com.sensoria.sensorialibrary;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
@@ -11,13 +10,11 @@ import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -129,6 +126,7 @@ public class SAAnklet extends SAFoundAnklet implements BluetoothAdapter.LeScanCa
         //Disconnect from any active tag connection
         if (mConnectedGatt != null) {
             mConnectedGatt.disconnect();
+            mConnectedGatt.close();
             mConnectedGatt = null;
         }
     }

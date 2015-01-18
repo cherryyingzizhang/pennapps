@@ -75,6 +75,7 @@ public class CalibrationsActivity extends ActionBarActivity implements SAAnkletI
         Parse.initialize(this, "p6UR5hKjTNIa78j8HykqFR2zsvI5nbrwZAJvvWlC", "3dfrd51jLIiGjYTIirGKwl6GtQpfupZg30LaPzBI");
 
         anklet = new SAAnklet(this);
+        onConnect();
     }
 
     @Override
@@ -86,6 +87,7 @@ public class CalibrationsActivity extends ActionBarActivity implements SAAnkletI
     @Override
     protected void onPause() {
         super.onPause();
+        anklet.pause();
 
         //CALIBRATION STORAGE TO CLOUD
         //take range of heel, mtb1, mtb5
@@ -104,9 +106,6 @@ public class CalibrationsActivity extends ActionBarActivity implements SAAnkletI
         storeRangeAndMeanOf("heel", 3);
         storeRangeAndMeanOf("mtb1", 3);
         storeRangeAndMeanOf("mtb5", 3);
-
-        finish();
-        anklet.pause();
     }
 
     public void storeRangeAndMeanOf(String valueToStore, int calibrationPoseNumber)
@@ -133,7 +132,6 @@ public class CalibrationsActivity extends ActionBarActivity implements SAAnkletI
     }
 
     public void onConnect() {
-
         Log.w("SensoriaLibrary", "Connect to " + selectedCode + " " + selectedMac);
         anklet.deviceCode = selectedCode;
         anklet.deviceMac = selectedMac;
@@ -284,9 +282,10 @@ public class CalibrationsActivity extends ActionBarActivity implements SAAnkletI
 
         if (numberOfPointsRecorded == 10)
         {
+            Log.e("","should go on to next pose");
             numberOfPointsRecorded = 0;
-            anklet.pause();
-            anklet.disconnect();
+//            anklet.pause();
+//            anklet.disconnect();
             calibrationPose++;
             if (calibrationPose == 4)
             {
@@ -356,8 +355,8 @@ public class CalibrationsActivity extends ActionBarActivity implements SAAnkletI
                 public void onClick(View v)
                 {
                     ((CalibrationsActivity)getActivity()).recordPoints = true;
-                    ((CalibrationsActivity)getActivity()).firstTime = false;
-                    ((CalibrationsActivity)getActivity()).onConnect();
+//                    ((CalibrationsActivity)getActivity()).firstTime = false;
+//                    ((CalibrationsActivity)getActivity()).anklet.resume();
                     button.setText("Calibrating...");
                     button.setEnabled(false);
                 }

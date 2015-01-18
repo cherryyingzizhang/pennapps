@@ -17,14 +17,20 @@ import android.widget.Toast;
 import com.sensoria.sensorialibrary.SAAnklet;
 import com.sensoria.sensorialibrary.SAAnkletInterface;
 import com.sensoria.sensorialibrary.SAFoundAnklet;
-import com.sensoria.sensorialibraryapp.ViewController.MonitorPage.TestServiceActivity;
 import com.sensoria.sensorialibraryapp.R;
+import com.sensoria.sensorialibraryapp.ViewController.MonitorPage.TestServiceActivity;
 
 public class DiagnosticsActivity extends ActionBarActivity implements SAAnkletInterface
 {
     boolean firstTime = false;
-
     SAAnklet anklet;
+    boolean inStep = false;
+    int inSteps = 0;
+    int outSteps = 0;
+    int numberOfStepsTotal = 10;
+    public int numberOfStepsTaken = 0;
+
+    Take10StepsFragment take10StepsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,7 +43,7 @@ public class DiagnosticsActivity extends ActionBarActivity implements SAAnkletIn
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction =
                 fragmentManager.beginTransaction();
-        Take10StepsFragment take10StepsFragment = new Take10StepsFragment();
+        take10StepsFragment = new Take10StepsFragment();
         fragmentTransaction.add(R.id.fragment_container, take10StepsFragment).commit();
 
         onConnect();
@@ -111,14 +117,16 @@ public class DiagnosticsActivity extends ActionBarActivity implements SAAnkletIn
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onNothingSelected(AdapterView<?> parent)
+            {
                 selectedCode = null;
             }
         });
     }
 
     @Override
-    public void didConnect() {
+    public void didConnect()
+    {
 
         Log.w("SensoriaLibrary", "Device Connected!");
         Toast.makeText(this, "connected", Toast.LENGTH_SHORT).show();
@@ -133,22 +141,78 @@ public class DiagnosticsActivity extends ActionBarActivity implements SAAnkletIn
     }
 
     @Override
-    public void didUpdateData() {
+    public void didUpdateData()
+    {
+        if (!inStep)
+        {
+            if (anklet.accZ < 0.12)
+            {
+                inStep = true;
+            }
+        }
+        else if (anklet.accZ > 0.12)
+        {
+            inStep = false;
+            if (anklet.mtb1 <= 430 &&
+                    anklet.mtb5 > 650)
+            {
+                outSteps++;
+            }
+            else if (anklet.mtb1 > 470 &&
+                    anklet.mtb5 <= 600)
+            {
+                inSteps++;
+            }
+            else
+            {
+                if (numberOfStepsTaken != numberOfStepsTotal)
+                {
+                    numberOfStepsTaken++;
+                    take10StepsFragment.stepsLeft.setText("" + (10-numberOfStepsTaken));
+                }
+                else
+                {
+                    //TODO GO TO RESULTS OF DIAGNOSIS PAGE
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction =
+                            fragmentManager.beginTransaction();
+                    DiagnosticResultFragment diagnosticResultFragment = new DiagnosticResultFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("result",getAppropriateResult());
+                    diagnosticResultFragment.setArguments(bundle);
+                    fragmentTransaction.add(R.id.fragment_container, diagnosticResultFragment).commit();
+                    anklet.disconnect();
+                }
+            }
+        }
+    }
 
-        //todo
-//        tick.setText(String.format("%d", anklet.tick));
-//        mtb1.setText(String.format("%d", anklet.mtb1));
-//        mtb5.setText(String.format("%d", anklet.mtb5));
-//        heel.setText(String.format("%d", anklet.heel));
-//        accX.setText(String.format("%f", anklet.accX));
-//        accY.setText(String.format("%f", anklet.accY));
-//        accZ.setText(String.format("%f", anklet.accZ));
+    public String getAppropriateResult()
+    {
+        if (inSteps > outSteps)
+        {
+            if (inSteps > 5)
+            {
+                return "You walk with lots of pressure in your inner soles. Maintain balance on your soles.";
+            }
+            else if (inSteps >= 3)
+            {
+                return "You walk with some amount of pressure in your inner soles. Maintain balance on your soles.";
+            }
+        }
+        else
+        {
+            if (outSteps > 5)
+            {
+                return "You walk with lots of pressure in your outer soles. Maintain balance on your soles.";
+            }
+            else if (outSteps >= 3)
+            {
+                return "You walk with some amount of pressure in your outer soles. Maintain balance on your soles.";
+            }
+        }
 
-        //todo
-//        mFootView.setMtb1(anklet.mtb1);
-//        mFootView.setMtb5(anklet.mtb5);
-//        mFootView.setHeel(anklet.heel);
-//        mFootView.invalidate();
+        return "your gait is fine!!!";
     }
 
     @Override

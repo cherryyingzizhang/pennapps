@@ -36,12 +36,19 @@ public class FirstTimeScreensActivity extends FragmentActivity implements Action
     AppSectionsPagerAdapter mAppSectionsPagerAdapter;
     ViewPager mViewPager;
 
+    public static final String AUTH_PENDING = "auth_state_pending";
+    public boolean authInProgress = false;
+
     //the circle page indicator swipe thing
     public static CirclePageIndicator pageIndicator;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.blank_info_activity);
+
+        if (savedInstanceState != null) {
+            authInProgress = savedInstanceState.getBoolean(AUTH_PENDING);
+        }
 
         mAppSectionsPagerAdapter = new AppSectionsPagerAdapter(getSupportFragmentManager());
 

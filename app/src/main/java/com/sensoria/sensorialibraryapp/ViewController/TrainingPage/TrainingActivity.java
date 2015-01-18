@@ -1,6 +1,7 @@
 package com.sensoria.sensorialibraryapp.ViewController.TrainingPage;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
@@ -65,7 +66,7 @@ public class TrainingActivity extends ActionBarActivity implements SAAnkletInter
             Toast.makeText(getApplicationContext(),
                     "Error: number of steps inputted in popup could not be found.",
                     Toast.LENGTH_SHORT)
-                        .show();
+                    .show();
             onBackPressed();
         }
 
@@ -75,15 +76,24 @@ public class TrainingActivity extends ActionBarActivity implements SAAnkletInter
 
         mCircleDisplay = (CircleDisplay) findViewById(R.id.circleDisplay);
         mCircleDisplay.setAnimDuration(5);
-        mCircleDisplay.setValueWidthPercent(55f);
-        mCircleDisplay.setFormatDigits(3);
+        mCircleDisplay.setValueWidthPercent(20f);
+        mCircleDisplay.setFormatDigits(0);
         mCircleDisplay.setDimAlpha(80);
         mCircleDisplay.setTouchEnabled(false);
-        mCircleDisplay.setUnit("%");
+        mCircleDisplay.setUnit("Steps");
         mCircleDisplay.setStepSize(0.5f);
+        mCircleDisplay.setColor(Color.RED);
         mCircleDisplay.showValue(numberOfStepsTaken, numberOfStepsTotal, true);
 
-        status = (TextView) findViewById(R.id.status);
+        mCircleDisplay.setAnimDuration(5);
+        mCircleDisplay.setValueWidthPercent(20f);
+        mCircleDisplay.setFormatDigits(0);
+        mCircleDisplay.setDimAlpha(80);
+        mCircleDisplay.setTouchEnabled(false);
+        mCircleDisplay.setUnit("Steps");
+        mCircleDisplay.setStepSize(0.5f);
+        mCircleDisplay.setColor(Color.BLACK);
+        mCircleDisplay.showValue(numberOfStepsTaken, numberOfStepsTotal, true);
 
         numberOfSteps = (TextView) findViewById(R.id.tv_numberOfSteps);
         numberOfSteps.setText(numberOfStepsTotal + " Steps");
@@ -266,7 +276,7 @@ public class TrainingActivity extends ActionBarActivity implements SAAnkletInter
                 inStep = true;
             }
         }
-        else if (anklet.accZ > 0.12)
+        else if (anklet.accZ > 0.15)
         {
             inStep = false;
             if (anklet.mtb1 <= 430 &&
@@ -291,6 +301,9 @@ public class TrainingActivity extends ActionBarActivity implements SAAnkletInter
                 {
                     numberOfStepsTaken++;
                     Toast.makeText(TrainingActivity.this, "" + numberOfStepsTaken, Toast.LENGTH_SHORT).show();
+
+                    numberOfSteps.setText(numberOfStepsTotal - numberOfStepsTaken + "Steps");
+
                     mCircleDisplay.showValue(numberOfStepsTaken, numberOfStepsTotal, true);
                     mCircleDisplay.invalidate();
                 }

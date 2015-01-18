@@ -55,6 +55,7 @@ public class MonitorActivity extends ActionBarActivity implements SAAnkletInterf
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_monitor);
 
         //sending data to our backend and analyzing the metadata.
@@ -258,7 +259,9 @@ public class MonitorActivity extends ActionBarActivity implements SAAnkletInterf
         else if (anklet.accZ > 0.12)
         {
             numSteps++;
-            Toast.makeText(MonitorActivity.this, "numsteps " + numSteps, Toast.LENGTH_SHORT).show();
+            //TODO: @Fan you can change the ui and add the number of steps and update them in real time
+            //using textview or something instead of a toast
+//            Toast.makeText(MonitorActivity.this, "numsteps " + numSteps, Toast.LENGTH_SHORT).show();
             inStep = false;
         }
 
