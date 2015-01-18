@@ -1,6 +1,7 @@
 package com.sensoria.sensorialibraryapp.ViewController.DiagnosticsPage;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -29,6 +30,7 @@ public class DiagnosticsActivity extends ActionBarActivity implements SAAnkletIn
     boolean firstTime = false;
     SAAnklet anklet;
     boolean inStep = false;
+    SharedPreferences preferences;
     int inSteps = 0;
     int outSteps = 0;
     int numberOfStepsTotal = 10;
@@ -52,6 +54,8 @@ public class DiagnosticsActivity extends ActionBarActivity implements SAAnkletIn
         anklet = new SAAnklet(this);
 
         algorithmMethods = new AlgorithmMethods(this);
+
+        preferences = this.getSharedPreferences("temp", getApplicationContext().MODE_PRIVATE);
 
         mCircleDisplay = (CircleDisplay) findViewById(R.id.circleDisplay);
         mCircleDisplay.setAnimDuration(5);
@@ -166,12 +170,12 @@ public class DiagnosticsActivity extends ActionBarActivity implements SAAnkletIn
 
         if (!inStep)
         {
-            if (anklet.accZ < 0.12)
+            if ((anklet.heel > preferences.getInt("cal1_heel_mean", 0) && anklet.mtb1 > preferences.getInt("cal1_mtb1_mean", 0)))
             {
                 inStep = true;
             }
         }
-        else if (anklet.accZ > 0.12)
+        else if (anklet.heel < preferences.getInt("cal1_heel_mean", 0) && anklet.mtb1 <= preferences.getInt("cal1_mtb1_mean", 0))
         {
             inStep = false;
             if (anklet.mtb1 <= 430 &&

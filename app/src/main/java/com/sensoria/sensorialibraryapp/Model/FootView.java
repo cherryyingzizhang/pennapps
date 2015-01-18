@@ -59,10 +59,10 @@ public class FootView extends View
         //left foot because we dont have right sensoria sock as we were only provided a left one
         mtb1X = 50;
         mtb1Y = 50;
-        mtb5X = footImage.getWidth()-100;
+        mtb5X = footImage.getWidth()-70;
         mtb5Y = 50;
-        heelX = footImage.getWidth()/2;
-        heelY = footImage.getHeight()-5;
+        heelX = footImage.getWidth()/2+30;
+        heelY = footImage.getHeight()-90;
         preferences = mContext.getSharedPreferences("temp", mContext.getApplicationContext().MODE_PRIVATE);
     }
 
@@ -164,7 +164,7 @@ public class FootView extends View
                 paint.setColor(Color.parseColor("#50FF0040"));
                 heelColor = ColorOfArea.RED;
             }
-            canvas.drawCircle(heelX/2+18, heelY/2+75, 50, paint);
+            canvas.drawCircle(heelX/2+18, heelY, 50, paint);
         }
     }
 }

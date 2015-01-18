@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -67,6 +68,7 @@ public class SummaryOfAppFragment2 extends Fragment
                             @Override
                             public void onConnected(Bundle bundle) {
                                 Log.e(TAG, "Connected!!!");
+                                Toast.makeText(getActivity(), "Connected", Toast.LENGTH_SHORT).show();
                                 // Now you can make calls to the Fitness APIs.
                                 // Put application specific code here.
 //                                new RetrieveData().execute();

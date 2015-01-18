@@ -447,10 +447,10 @@ public class CalibrationsActivity extends ActionBarActivity implements SAAnkletI
                     break;
                 case 2:
                     imageView.setImageDrawable(getResources().getDrawable(R.drawable.foot2));
-                    textView.setText("LEAN FORWARD");
+                    textView.setText("LEAN FORWARD"); //same pic as last one because barely any difference
                     break;
                 case 3:
-                    imageView.setImageDrawable(getResources().getDrawable(R.drawable.foot3));
+                    imageView.setImageDrawable(getResources().getDrawable(R.drawable.foot4));
                     textView.setText("HEEL UP");
                     break;
                 default: break;

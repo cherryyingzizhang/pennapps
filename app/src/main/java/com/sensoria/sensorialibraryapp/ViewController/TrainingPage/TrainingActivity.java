@@ -1,6 +1,7 @@
 package com.sensoria.sensorialibraryapp.ViewController.TrainingPage;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,7 +31,7 @@ public class TrainingActivity extends ActionBarActivity implements SAAnkletInter
 {
 
     boolean firstTime = false;
-
+    SharedPreferences preferences;
     int ERROR = -999;
     int numberOfStepsTotal;
     int numberOfStepsTaken;
@@ -99,6 +100,8 @@ public class TrainingActivity extends ActionBarActivity implements SAAnkletInter
         });
 
         status = (TextView) findViewById(R.id.status);
+
+        preferences = this.getSharedPreferences("temp", getApplicationContext().MODE_PRIVATE);
 
         onConnect();
     }
@@ -213,7 +216,7 @@ public class TrainingActivity extends ActionBarActivity implements SAAnkletInter
                 if (!firstTime)
                 {
                     firstTime = true;
-                    Toast.makeText(TrainingActivity.this, "connected, connect again", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TrainingActivity.this, "connected", Toast.LENGTH_SHORT).show();
                     onConnect();
                 }
             }
@@ -225,7 +228,7 @@ public class TrainingActivity extends ActionBarActivity implements SAAnkletInter
                 if (!firstTime)
                 {
                     firstTime = true;
-                    Toast.makeText(TrainingActivity.this, "connected, connect again", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TrainingActivity.this, "connected", Toast.LENGTH_SHORT).show();
                     onConnect();
                 }
             }
@@ -239,7 +242,7 @@ public class TrainingActivity extends ActionBarActivity implements SAAnkletInter
         if (!firstTime)
         {
             firstTime = true;
-            Toast.makeText(TrainingActivity.this, "connected, connect again", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TrainingActivity.this, "connected", Toast.LENGTH_SHORT).show();
             onConnect();
         }
 
@@ -252,7 +255,7 @@ public class TrainingActivity extends ActionBarActivity implements SAAnkletInter
         if (!firstTime)
         {
             firstTime = true;
-            Toast.makeText(TrainingActivity.this, "connected, connect again", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TrainingActivity.this, "connected", Toast.LENGTH_SHORT).show();
             onConnect();
         }
     }
@@ -263,12 +266,12 @@ public class TrainingActivity extends ActionBarActivity implements SAAnkletInter
 
         if (!inStep)
         {
-            if (anklet.accZ < 0.12)
+            if (anklet.heel > preferences.getInt("cal1_heel_mean", 0) && anklet.mtb1 > preferences.getInt("cal1_mtb1_mean", 0)) //general threshold that constitutes a step in z-direction after much experimentation
             {
                 inStep = true;
             }
         }
-        else if (anklet.accZ > 0.15)
+        else if (anklet.heel < preferences.getInt("cal1_heel_mean", 0) && anklet.mtb1 <= preferences.getInt("cal1_mtb1_mean", 0))
         {
             inStep = false;
             if (anklet.mtb1 <= 430 &&
