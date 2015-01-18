@@ -177,4 +177,22 @@
         android:layout_height="200dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PoseType"
+        android:id="@+id/posetypetextview"
+        android:layout_below="@+id/accZ"
+        android:layout_alignParentStart="true"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="0"
+        android:id="@+id/poseTypeValue"
+        android:layout_below="@+id/accZValue"
+        android:layout_alignStart="@+id/accZValue"/>
 </RelativeLayout>

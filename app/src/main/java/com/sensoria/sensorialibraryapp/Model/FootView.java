@@ -1,6 +1,7 @@
 package com.sensoria.sensorialibraryapp.Model;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -30,6 +31,7 @@ public class FootView extends View
     Bitmap footImage;
     Integer mtb1, mtb5, heel;
     int mtb1X, mtb1Y, mtb5X, mtb5Y, heelX, heelY;
+    SharedPreferences preferences;
 
     public FootView(Context context) {
         super(context);
@@ -61,6 +63,7 @@ public class FootView extends View
         mtb5Y = 50;
         heelX = footImage.getWidth()/2;
         heelY = footImage.getHeight()-5;
+        preferences = mContext.getSharedPreferences("temp", mContext.getApplicationContext().MODE_PRIVATE);
     }
 
     public ColorOfArea getMtb1Color()
@@ -97,7 +100,7 @@ public class FootView extends View
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        footImage = Bitmap.createScaledBitmap(footImage, 200, 400, false);
+        footImage = Bitmap.createScaledBitmap(footImage, canvas.getWidth(), canvas.getHeight(), false);
 
         Paint paint = new Paint();
         paint.setStyle(Paint.Style.FILL);
@@ -109,12 +112,12 @@ public class FootView extends View
         if (mtb1 != null && mtb5 != null && heel != null)
         {
             //mtb1
-            if (mtb1 <= 430)
+            if (mtb1 <= preferences.getInt("cal1_mtb1_mean", 0))
             {
                 paint.setColor(Color.parseColor("#5000FF00"));
                 mtb1Color = ColorOfArea.GREEN;
             }
-            else if (mtb1 <= 470)
+            else if (mtb1 <= preferences.getInt("cal3_mtb1_mean", 0))
             {
                 paint.setColor(Color.parseColor("#50FFFF00"));
                 mtb1Color = ColorOfArea.YELLOW;
@@ -125,15 +128,15 @@ public class FootView extends View
                 mtb1Color = ColorOfArea.RED;
             }
 
-            canvas.drawCircle(mtb1X, mtb1Y, 50, paint);
+            canvas.drawCircle(mtb1X, mtb1Y+90, 50, paint);
 
             //mtb5
-            if (mtb5 <= 600)
+            if (mtb5 <= preferences.getInt("cal1_mtb5_mean", 0))
             {
                 paint.setColor(Color.parseColor("#5000FF00"));
                 mtb5Color = ColorOfArea.GREEN;
             }
-            else if (mtb5 <= 650)
+            else if (mtb5 <= preferences.getInt("cal3_mtb5_mean", 0))
             {
                 paint.setColor(Color.parseColor("#50FFFF00"));
                 mtb5Color = ColorOfArea.YELLOW;
@@ -143,15 +146,15 @@ public class FootView extends View
                 paint.setColor(Color.parseColor("#50FF0040"));
                 mtb5Color = ColorOfArea.RED;
             }
-            canvas.drawCircle(mtb5X, mtb5Y, 50, paint);
+            canvas.drawCircle(mtb5X, mtb5Y+80, 50, paint);
 
             //heel
-            if (heel <= 550)
+            if (heel <= preferences.getInt("cal2_heel_mean", 0))
             {
                 paint.setColor(Color.parseColor("#5000FF00"));
                 heelColor = ColorOfArea.GREEN;
             }
-            else if (heel <= 600)
+            else if (heel <= preferences.getInt("cal0_heel_mean", 0))
             {
                 paint.setColor(Color.parseColor("#50FFFF00"));
                 heelColor = ColorOfArea.YELLOW;
@@ -161,7 +164,7 @@ public class FootView extends View
                 paint.setColor(Color.parseColor("#50FF0040"));
                 heelColor = ColorOfArea.RED;
             }
-            canvas.drawCircle(heelX/2, heelY/2+5, 50, paint);
+            canvas.drawCircle(heelX/2+18, heelY/2+75, 50, paint);
         }
     }
 }

@@ -1,8 +1,7 @@
 package com.sensoria.sensorialibraryapp.ViewController.DiagnosticsPage;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -12,13 +11,18 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.philjay.circledisplay.CircleDisplay;
 import com.sensoria.sensorialibrary.SAAnklet;
 import com.sensoria.sensorialibrary.SAAnkletInterface;
 import com.sensoria.sensorialibrary.SAFoundAnklet;
 import com.sensoria.sensorialibraryapp.R;
+import com.sensoria.sensorialibraryapp.UsefulClasses.AlgorithmMethods;
 import com.sensoria.sensorialibraryapp.ViewController.MonitorPage.TestServiceActivity;
+
+import java.util.ArrayList;
 
 public class DiagnosticsActivity extends ActionBarActivity implements SAAnkletInterface
 {
@@ -29,8 +33,13 @@ public class DiagnosticsActivity extends ActionBarActivity implements SAAnkletIn
     int outSteps = 0;
     int numberOfStepsTotal = 10;
     public int numberOfStepsTaken = 0;
+    private CircleDisplay mCircleDisplay; //circleDisplay
 
-    Take10StepsFragment take10StepsFragment;
+    ArrayList<Integer> poses = new ArrayList<Integer>();
+
+    AlgorithmMethods algorithmMethods;
+
+    TextView stepsLeft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -38,13 +47,22 @@ public class DiagnosticsActivity extends ActionBarActivity implements SAAnkletIn
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diagnostics);
 
+        stepsLeft = (TextView) findViewById(R.id.tv_numberOfSteps);
+
         anklet = new SAAnklet(this);
 
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction =
-                fragmentManager.beginTransaction();
-        take10StepsFragment = new Take10StepsFragment();
-        fragmentTransaction.add(R.id.fragment_container, take10StepsFragment).commit();
+        algorithmMethods = new AlgorithmMethods(this);
+
+        mCircleDisplay = (CircleDisplay) findViewById(R.id.circleDisplay);
+        mCircleDisplay.setAnimDuration(5);
+        mCircleDisplay.setValueWidthPercent(20f);
+        mCircleDisplay.setFormatDigits(0);
+        mCircleDisplay.setDimAlpha(80);
+        mCircleDisplay.setTouchEnabled(false);
+        mCircleDisplay.setUnit("Steps");
+        mCircleDisplay.setStepSize(0.5f);
+        mCircleDisplay.setColor(Color.RED);
+        mCircleDisplay.showValue(numberOfStepsTaken, numberOfStepsTotal, true);
 
         onConnect();
     }
@@ -143,6 +161,9 @@ public class DiagnosticsActivity extends ActionBarActivity implements SAAnkletIn
     @Override
     public void didUpdateData()
     {
+
+        poses.add(algorithmMethods.matchesPose(anklet.mtb1, anklet.mtb5, anklet.heel));
+
         if (!inStep)
         {
             if (anklet.accZ < 0.12)
@@ -168,20 +189,22 @@ public class DiagnosticsActivity extends ActionBarActivity implements SAAnkletIn
                 if (numberOfStepsTaken != numberOfStepsTotal)
                 {
                     numberOfStepsTaken++;
-                    take10StepsFragment.stepsLeft.setText("" + (10-numberOfStepsTaken));
+                    if (stepsLeft != null)
+                    {
+                        stepsLeft.setText(numberOfStepsTotal - numberOfStepsTaken + " Steps");
+                        mCircleDisplay.showValue(numberOfStepsTaken, numberOfStepsTotal, true);
+                        mCircleDisplay.invalidate();
+                    }
                 }
                 else
                 {
                     //TODO GO TO RESULTS OF DIAGNOSIS PAGE
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction fragmentTransaction =
-                            fragmentManager.beginTransaction();
-                    DiagnosticResultFragment diagnosticResultFragment = new DiagnosticResultFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("result",getAppropriateResult());
-                    diagnosticResultFragment.setArguments(bundle);
-                    fragmentTransaction.add(R.id.fragment_container, diagnosticResultFragment).commit();
                     anklet.disconnect();
+                    Intent intent = new Intent(DiagnosticsActivity.this, DiagnosticResultsActivity.class);
+                    intent.putIntegerArrayListExtra("poses", poses);
+                    intent.putExtra("result", getAppropriateResult());
+                    startActivity(intent);
+                    finish();
                 }
             }
         }

@@ -1,6 +1,7 @@
 package com.sensoria.sensorialibraryapp.ViewController.CalibrationsPage;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -15,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.Parse;
@@ -71,6 +73,8 @@ public class CalibrationsActivity extends ActionBarActivity implements SAAnkletI
                     .commit();
         }
 
+        setTitle("Calibrations");
+
         //sending calibration data to our backend and analyzing the metadata.
         Parse.initialize(this, "p6UR5hKjTNIa78j8HykqFR2zsvI5nbrwZAJvvWlC", "3dfrd51jLIiGjYTIirGKwl6GtQpfupZg30LaPzBI");
 
@@ -94,18 +98,86 @@ public class CalibrationsActivity extends ActionBarActivity implements SAAnkletI
         //if range > 100... redo the whole calibration steps (the 4 steps)
         //take mean of heel, mtb1, mtb5, and half the range to person's google fit
         //use those numbers later
-        storeRangeAndMeanOf("heel", 0);
-        storeRangeAndMeanOf("mtb1", 0);
-        storeRangeAndMeanOf("mtb5", 0);
-        storeRangeAndMeanOf("heel", 1);
-        storeRangeAndMeanOf("mtb1", 1);
-        storeRangeAndMeanOf("mtb5", 1);
-        storeRangeAndMeanOf("heel", 2);
-        storeRangeAndMeanOf("mtb1", 2);
-        storeRangeAndMeanOf("mtb5", 2);
-        storeRangeAndMeanOf("heel", 3);
-        storeRangeAndMeanOf("mtb1", 3);
-        storeRangeAndMeanOf("mtb5", 3);
+
+        SharedPreferences preferences = getSharedPreferences("temp", getApplicationContext().MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("cal0_mtb1_mean", calculateMean(cal0_mtb1));
+        editor.putInt("cal0_mtb5_mean", calculateMean(cal0_mtb5));
+        editor.putInt("cal0_heel_mean", calculateMean(cal0_heel));
+
+        editor.putInt("cal1_mtb1_mean", calculateMean(cal1_mtb1));
+        editor.putInt("cal1_mtb5_mean", calculateMean(cal1_mtb5));
+        editor.putInt("cal1_heel_mean", calculateMean(cal1_heel));
+
+        editor.putInt("cal2_mtb1_mean", calculateMean(cal2_mtb1));
+        editor.putInt("cal2_mtb5_mean", calculateMean(cal2_mtb5));
+        editor.putInt("cal2_heel_mean", calculateMean(cal2_heel));
+
+        editor.putInt("cal3_mtb1_mean", calculateMean(cal3_mtb1));
+        editor.putInt("cal3_mtb5_mean", calculateMean(cal3_mtb5));
+        editor.putInt("cal3_heel_mean", calculateMean(cal3_heel));
+
+        ///////////////////////////////
+
+        editor.putInt("cal0_mtb1_range", calculateRange(cal0_mtb1));
+        editor.putInt("cal0_mtb5_range", calculateRange(cal0_mtb5));
+        editor.putInt("cal0_heel_range", calculateRange(cal0_heel));
+
+        editor.putInt("cal1_mtb1_range", calculateRange(cal1_mtb1));
+        editor.putInt("cal1_mtb5_range", calculateRange(cal1_mtb5));
+        editor.putInt("cal1_heel_range", calculateRange(cal1_heel));
+
+        editor.putInt("cal2_mtb1_range", calculateRange(cal2_mtb1));
+        editor.putInt("cal2_mtb5_range", calculateRange(cal2_mtb5));
+        editor.putInt("cal2_heel_range", calculateRange(cal2_heel));
+
+        editor.putInt("cal3_mtb1_range", calculateRange(cal3_mtb1));
+        editor.putInt("cal3_mtb5_range", calculateRange(cal3_mtb5));
+        editor.putInt("cal3_heel_range", calculateRange(cal3_heel));
+
+        editor.commit();
+    }
+
+    public int calculateMean(ArrayList<Integer> numbers)
+    {
+        int sum = 0;
+        if (numbers != null && !numbers.isEmpty())
+        {
+            for (int i = 0; i < numbers.size(); i++)
+            {
+                sum += numbers.get(i);
+            }
+            return sum/numbers.size();
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public int calculateRange(ArrayList<Integer> numbers)
+    {
+        if (numbers == null)
+        {
+            return 0;
+        }
+
+        int max = 0;
+        int min = 9999;
+
+        for (int i = 0; i < numbers.size(); i++)
+        {
+            if (numbers.get(i) > max)
+            {
+                max = numbers.get(i);
+            }
+            else if (numbers.get(i) < min)
+            {
+                min = numbers.get(i);
+            }
+        }
+
+        return Math.abs(max-min);
     }
 
     public void storeRangeAndMeanOf(String valueToStore, int calibrationPoseNumber)
@@ -161,7 +233,7 @@ public class CalibrationsActivity extends ActionBarActivity implements SAAnkletI
                 if (!firstTime)
                 {
                     firstTime = true;
-                    Toast.makeText(CalibrationsActivity.this, "connected, connect again", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CalibrationsActivity.this, "Connected", Toast.LENGTH_SHORT).show();
                     onConnect();
                 }
             }
@@ -173,7 +245,7 @@ public class CalibrationsActivity extends ActionBarActivity implements SAAnkletI
                 if (!firstTime)
                 {
                     firstTime = true;
-                    Toast.makeText(CalibrationsActivity.this, "connected, connect again", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CalibrationsActivity.this, "Connected", Toast.LENGTH_SHORT).show();
                     onConnect();
                 }
             }
@@ -186,7 +258,7 @@ public class CalibrationsActivity extends ActionBarActivity implements SAAnkletI
         if (!firstTime)
         {
             firstTime = true;
-            Toast.makeText(CalibrationsActivity.this, "connected, connect again", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CalibrationsActivity.this, "Connected", Toast.LENGTH_SHORT).show();
             onConnect();
         }
     }
@@ -197,7 +269,7 @@ public class CalibrationsActivity extends ActionBarActivity implements SAAnkletI
         if (!firstTime)
         {
             firstTime = true;
-            Toast.makeText(CalibrationsActivity.this, "connected, connect again", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CalibrationsActivity.this, "Connected", Toast.LENGTH_SHORT).show();
             onConnect();
         }
     }
@@ -218,6 +290,10 @@ public class CalibrationsActivity extends ActionBarActivity implements SAAnkletI
                         dataPoint.put("heel", anklet.heel);
                         dataPoint.put("accz", anklet.accZ);
                         dataPoint.saveInBackground();
+
+                        Log.e("cal 0 mtb1", ""+anklet.mtb1);
+                        Log.e("cal 0 mtb5", ""+anklet.mtb5);
+                        Log.e("cal 0 heel", ""+anklet.heel);
 
                         cal0_heel.add(anklet.heel);
                         cal0_mtb1.add(anklet.mtb1);
@@ -240,6 +316,10 @@ public class CalibrationsActivity extends ActionBarActivity implements SAAnkletI
                         cal1_mtb1.add(anklet.mtb1);
                         cal1_mtb5.add(anklet.mtb5);
 
+                        Log.e("cal 1 mtb1", ""+anklet.mtb1);
+                        Log.e("cal 1 mtb5", ""+anklet.mtb5);
+                        Log.e("cal 1 heel", ""+anklet.heel);
+
                         numberOfPointsRecorded++;
                     }
                     break;
@@ -257,6 +337,10 @@ public class CalibrationsActivity extends ActionBarActivity implements SAAnkletI
                         cal2_mtb1.add(anklet.mtb1);
                         cal2_mtb5.add(anklet.mtb5);
 
+                        Log.e("cal 2 mtb1", ""+anklet.mtb1);
+                        Log.e("cal 2 mtb5", ""+anklet.mtb5);
+                        Log.e("cal 2 heel", ""+anklet.heel);
+
                         numberOfPointsRecorded++;
                     }
                     break;
@@ -273,6 +357,10 @@ public class CalibrationsActivity extends ActionBarActivity implements SAAnkletI
                         cal3_heel.add(anklet.heel);
                         cal3_mtb1.add(anklet.mtb1);
                         cal3_mtb5.add(anklet.mtb5);
+
+                        Log.e("cal 3 mtb1", ""+anklet.mtb1);
+                        Log.e("cal 3 mtb5", ""+anklet.mtb5);
+                        Log.e("cal 3 heel", ""+anklet.heel);
 
                         numberOfPointsRecorded++;
                     }
@@ -346,7 +434,27 @@ public class CalibrationsActivity extends ActionBarActivity implements SAAnkletI
             View rootView = inflater.inflate(R.layout.calibrations_fragment, container, false);
 
             ImageView imageView = (ImageView) rootView.findViewById(R.id.imageViewFootPosition);
-            //todo change the imageview haha
+            TextView textView = (TextView) rootView.findViewById(R.id.textView11);
+
+            switch(calibrationPose) {
+                case 0:
+                    imageView.setImageDrawable(getResources().getDrawable(R.drawable.foot1));
+                    textView.setText("HEEL STRIKE");
+                    break;
+                case 1:
+                    imageView.setImageDrawable(getResources().getDrawable(R.drawable.foot2));
+                    textView.setText("FLAT FOOT");
+                    break;
+                case 2:
+                    imageView.setImageDrawable(getResources().getDrawable(R.drawable.foot2));
+                    textView.setText("LEAN FORWARD");
+                    break;
+                case 3:
+                    imageView.setImageDrawable(getResources().getDrawable(R.drawable.foot3));
+                    textView.setText("HEEL UP");
+                    break;
+                default: break;
+            }
 
             final Button button = (Button) rootView.findViewById(R.id.button_calibrations);
             button.setOnClickListener(new View.OnClickListener()

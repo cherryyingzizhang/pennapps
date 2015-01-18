@@ -1,15 +1,60 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/fragment_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                tools:context="com.sensoria.sensorialibraryapp.ViewController.DiagnosticsPage.DiagnosticsActivity">
+                android:orientation="vertical"
+                tools:context="com.sensoria.sensorialibraryapp.ViewController.TrainingPage.TrainingActivity">
+
+    <TextView
+        android:text="Gait Diagnosis"
+        android:textSize="25sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/textView10"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
+
+    <com.philjay.circledisplay.CircleDisplay
+        android:id="@+id/circleDisplay"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_below="@+id/textView10"
+        android:layout_alignParentStart="true"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/linearLayout4">
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_numberOfSteps"
+        android:text="1000 Steps"
+        android:textSize="50sp"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView11"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:text="Steps Remaining:"
+        android:layout_marginTop="30dp"
+        android:textSize="30sp"
+        android:paddingTop="30dp"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/circleDisplay"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textView11"/>
+
 
     <Spinner
+        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/spinner"

@@ -24,11 +24,14 @@ import com.sensoria.sensorialibrary.SAAnkletInterface;
 import com.sensoria.sensorialibrary.SAFoundAnklet;
 import com.sensoria.sensorialibraryapp.Model.FootView;
 import com.sensoria.sensorialibraryapp.R;
+import com.sensoria.sensorialibraryapp.UsefulClasses.AlgorithmMethods;
 
 import java.util.UUID;
 
 //class from the sample app from sensoria... this and TestServiceActivity are from the sample.
 public class MonitorActivity extends ActionBarActivity implements SAAnkletInterface {
+
+    AlgorithmMethods algorithmMethods;
 
     int numSteps = 0;
 
@@ -52,11 +55,29 @@ public class MonitorActivity extends ActionBarActivity implements SAAnkletInterf
 
     private PebbleKit.PebbleDataReceiver appMessageReciever;
 
+    TextView tick;
+    TextView mtb1;
+    TextView mtb5;
+    TextView heel;
+    TextView accX;
+    TextView accY;
+    TextView accZ;
+    TextView poseType;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_monitor);
+
+        tick = (TextView) findViewById(R.id.tickValue);
+        mtb1 = (TextView) findViewById(R.id.mtb1Value);
+        mtb5 = (TextView) findViewById(R.id.mtb5Value);
+        heel = (TextView) findViewById(R.id.heelValue);
+        accX = (TextView) findViewById(R.id.accXValue);
+        accY = (TextView) findViewById(R.id.accYValue);
+        accZ = (TextView) findViewById(R.id.accZValue);
+        poseType = (TextView) findViewById(R.id.poseTypeValue);
 
         //sending data to our backend and analyzing the metadata.
         Parse.initialize(this, "p6UR5hKjTNIa78j8HykqFR2zsvI5nbrwZAJvvWlC", "3dfrd51jLIiGjYTIirGKwl6GtQpfupZg30LaPzBI");
@@ -64,6 +85,8 @@ public class MonitorActivity extends ActionBarActivity implements SAAnkletInterf
         anklet = new SAAnklet(this);
 
         mFootView =  (FootView) findViewById(R.id.footview);
+
+        algorithmMethods = new AlgorithmMethods(this);
     }
 
     @Override
@@ -228,14 +251,6 @@ public class MonitorActivity extends ActionBarActivity implements SAAnkletInterf
     @Override
     public void didUpdateData() {
 
-        TextView tick = (TextView) findViewById(R.id.tickValue);
-        TextView mtb1 = (TextView) findViewById(R.id.mtb1Value);
-        TextView mtb5 = (TextView) findViewById(R.id.mtb5Value);
-        TextView heel = (TextView) findViewById(R.id.heelValue);
-        TextView accX = (TextView) findViewById(R.id.accXValue);
-        TextView accY = (TextView) findViewById(R.id.accYValue);
-        TextView accZ = (TextView) findViewById(R.id.accZValue);
-
         tick.setText(String.format("%d", anklet.tick));
         mtb1.setText(String.format("%d", anklet.mtb1));
         mtb5.setText(String.format("%d", anklet.mtb5));
@@ -243,6 +258,7 @@ public class MonitorActivity extends ActionBarActivity implements SAAnkletInterf
         accX.setText(String.format("%f", anklet.accX));
         accY.setText(String.format("%f", anklet.accY));
         accZ.setText(String.format("%f", anklet.accZ));
+        poseType.setText("" + algorithmMethods.matchesPose(anklet.mtb1, anklet.mtb5, anklet.heel));
 
         mFootView.setMtb1(anklet.mtb1);
         mFootView.setMtb5(anklet.mtb5);

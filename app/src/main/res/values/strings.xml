@@ -9,5 +9,6 @@
     <string name="title_activity_diagnostics">DiagnosticsActivity</string>
     <string name="title_activity_training">TrainingActivity</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_diagnostic_results">DiagnosticResultsActivity</string>
 
 </resources>

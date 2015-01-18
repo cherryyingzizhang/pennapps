@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sensoria.sensorialibraryapp" >
 
-    <!-- We need to be able to download map tiles and access Google Play Services-->
+    <!-- We need to be able to download map tiles and access Google Play Services -->
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- Allow the application to access Google web-based services. -->
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
@@ -16,9 +16,9 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-
-        <meta-data android:name="com.google.android.gms.version"
-                   android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
         <activity
             android:name=".FirstTimeScreens.FirstTimeScreensActivity"
@@ -27,6 +27,7 @@
             android:theme="@android:style/Theme.Holo.Light" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -44,6 +45,7 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -62,11 +64,16 @@
         <activity
             android:name=".ViewController.CalibrationsPage.CalibrationsActivity"
             android:label="@string/title_activity_main"
-            android:noHistory="true">
+            android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ViewController.DiagnosticsPage.DiagnosticResultsActivity"
+            android:label="@string/title_activity_diagnostic_results" >
         </activity>
     </application>
 

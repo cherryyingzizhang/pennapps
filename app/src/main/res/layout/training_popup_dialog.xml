@@ -38,9 +38,12 @@
         </LinearLayout>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="Start Training!"
+        android:background="#F44336"
+        android:textColor="#FFFFFF"
         android:id="@+id/button_startTraining"
         android:layout_gravity="center_horizontal"/>
 

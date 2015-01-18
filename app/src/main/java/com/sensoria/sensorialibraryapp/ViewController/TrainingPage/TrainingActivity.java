@@ -85,16 +85,6 @@ public class TrainingActivity extends ActionBarActivity implements SAAnkletInter
         mCircleDisplay.setColor(Color.RED);
         mCircleDisplay.showValue(numberOfStepsTaken, numberOfStepsTotal, true);
 
-        mCircleDisplay.setAnimDuration(5);
-        mCircleDisplay.setValueWidthPercent(20f);
-        mCircleDisplay.setFormatDigits(0);
-        mCircleDisplay.setDimAlpha(80);
-        mCircleDisplay.setTouchEnabled(false);
-        mCircleDisplay.setUnit("Steps");
-        mCircleDisplay.setStepSize(0.5f);
-        mCircleDisplay.setColor(Color.BLACK);
-        mCircleDisplay.showValue(numberOfStepsTaken, numberOfStepsTotal, true);
-
         numberOfSteps = (TextView) findViewById(R.id.tv_numberOfSteps);
         numberOfSteps.setText(numberOfStepsTotal + " Steps");
 
@@ -107,6 +97,8 @@ public class TrainingActivity extends ActionBarActivity implements SAAnkletInter
                 onBackPressed();
             }
         });
+
+        status = (TextView) findViewById(R.id.status);
 
         onConnect();
     }
@@ -300,9 +292,8 @@ public class TrainingActivity extends ActionBarActivity implements SAAnkletInter
                 if (numberOfStepsTaken != numberOfStepsTotal)
                 {
                     numberOfStepsTaken++;
-                    Toast.makeText(TrainingActivity.this, "" + numberOfStepsTaken, Toast.LENGTH_SHORT).show();
 
-                    numberOfSteps.setText(numberOfStepsTotal - numberOfStepsTaken + "Steps");
+                    numberOfSteps.setText(numberOfStepsTotal - numberOfStepsTaken + " Steps");
 
                     mCircleDisplay.showValue(numberOfStepsTaken, numberOfStepsTotal, true);
                     mCircleDisplay.invalidate();
