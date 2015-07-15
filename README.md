@@ -4,7 +4,7 @@ This repository holds our Android hackathon project for Penn Apps Winter 2015. O
 
 To summarize, it is basically a rehabilitative app that uses this "sock sensor" that collects raw data (e.g. accelerometer and pressure sensors) to give you a diagnosis on any feet problems/gait problems you may have. It also has a preliminary rehabilitation program to improve your gait (if you have a bad one). It can also collect this data and send it to Parse, which can be easily viewable/sent to the patient's doctor.
 
-# Improvements
+# Improvements (Filtering out the Noise from Sensors)
 https://en.wikipedia.org/wiki/Low-pass_filter#Simple_infinite_impulse_response_filter
 
 Because I was still a first year engineering student, I had some trouble with the design of how to interpret all of the raw data coming every time the sensor data updated. This is because in real life, there is noise in any signal, and of course people weigh differently/have different feet sizes, so we needed to somehow interpret the data for anyone and everyone. That is why we had a calibration system where the user needed to do the four classic gait poses, and then we save those numbers/data we get from the calibration data into persistent local app storage. However, sometimes there still may be noise.
