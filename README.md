@@ -29,6 +29,6 @@ On a fun side note, one of my other friends from MIT mentioned that this exact s
 Link about this stock market smoothing curve is here:
 https://en.wikipedia.org/wiki/Moving_average#Exponential_moving_average
 
-# Improvement 2 (Device Compatibility)
+# Improvement 2 (Multiple Devices Screen Size Compatibility)
 
 I'm not going to link the ChallengePost link to our hackathon project, simply because one of our team members used screenshots of the app's "first run-time UI/guide" on his OnePlus One, which obviously made the text formatting onto the screen look a bit wonky, as our UI/xml coder mostly tried to optimize the UI for my Naxus 4. If this wasn't an actual hackathon, we would've totally accounted for multiple device-screen sizes.
