@@ -31,6 +31,6 @@ https://en.wikipedia.org/wiki/Moving_average#Exponential_moving_average
 
 ^^^ As you can see, it is literally the EXACT SAME equation! They even use the same symbol for the coefficient (alpha).
 
-# Improvement 2 (Multiple Devices Screen Size Compatibility)
+# Improvement 2 (Multiple Devices Screen Size UI Responsiveness)
 
-I'm not going to link the ChallengePost link to our hackathon project, simply because one of our team members used screenshots of the app's "first run-time UI/guide" on his OnePlus One, which obviously made the text formatting onto the screen look a bit wonky, as our UI/xml coder mostly tried to optimize the UI for my Naxus 4. If this wasn't an actual hackathon, we would've totally accounted for multiple device-screen sizes.
+I'm not going to link the ChallengePost link to our hackathon project, simply because one of our team members used screenshots of the app's "first run-time UI/guide" on his OnePlus One, which obviously made the text formatting onto the screen look a bit wonky, as our UI/xml coder mostly tried to optimize the UI for my Nexus 4, which has a smaller screen size. If this wasn't an actual hackathon, we would've totally accounted for multiple device-screen sizes.
